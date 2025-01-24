@@ -682,6 +682,28 @@ export type Plugin = {
     handlePostCharacterLoaded?: (char: Character) => Promise<Character>;
 };
 
+/**
+ * Available client platforms
+ */
+export enum Clients {
+    ALEXA= "alexa",
+    DISCORD = "discord",
+    DIRECT = "direct",
+    TWITTER = "twitter",
+    TELEGRAM = "telegram",
+    TELEGRAM_ACCOUNT = "telegram-account",
+    FARCASTER = "farcaster",
+    LENS = "lens",
+    AUTO = "auto",
+    SLACK = "slack",
+    GITHUB = "github",
+    INSTAGRAM = "instagram",
+    SIMSAI = "simsai",
+    XMTP = "xmtp",
+    DEVA = "deva",
+    GMAIL = "gmail",
+}
+
 export interface IAgentConfig {
     [key: string]: string;
 }
@@ -793,6 +815,8 @@ export type Character = {
         jeeterMessageHandlerTemplate?: string;
         jeeterShouldRespondTemplate?: string;
         devaPostTemplate?: string;
+        gmailShouldRespondTemplate?: TemplateType;
+        gmailMessageHandlerTemplate?: TemplateType;
     };
 
     /** Character biography */
@@ -803,6 +827,9 @@ export type Character = {
 
     /** Example messages */
     messageExamples: MessageExample[][];
+
+    /** Example emails */
+    emailExamples: MessageExample[][];
 
     /** Example posts */
     postExamples: string[];
@@ -998,6 +1025,9 @@ export interface IDatabaseAdapter {
 
     /** Create new account */
     createAccount(account: Account): Promise<boolean>;
+
+    /** Update account */
+    updateAccount(account: Account): Promise<boolean>;
 
     /** Get memories matching criteria */
     getMemories(params: {
